@@ -31,9 +31,9 @@ The integrated multimodal approach successfully met and exceeded all quantitativ
 
 | Model Configuration | Target Accuracy Threshold | Achieved Test Accuracy | Achieved ROC-AUC | Achieved PR-AUC (AP) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Clinical Baseline Model (MLP)** | $\ge 60\%$ | **77.5%** | **0.89** | **0.73** |
-| **Image Texture Model (EfficientNetB0)** | $\ge 70\%$ | **79.0%** | **0.76** | **0.497** |
-| **Integrated Multimodal Model (Fusion)** | $\ge 75\%$ | **82.0%** | **0.90** | **0.82** |
+| **Clinical Baseline Model (MLP)** | $\ge$ 60% | **77.5%** | **0.89** | **0.73** |
+| **Image Texture Model (EfficientNetB0)** | $\ge$ 70% | **79.0%** | **0.76** | **0.497** |
+| **Integrated Multimodal Model (Fusion)** | $\ge$ 75% | **82.0%** | **0.90** | **0.82** |
 
 ### Clinical Optimization Strategy
 To align the engineering implementation with patient safety priorities, a major emphasis was placed on the **suppression of False Negative errors** (high-risk preterm cases misclassified as healthy pregnancies). 
