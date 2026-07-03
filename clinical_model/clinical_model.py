@@ -217,3 +217,95 @@ print("3. Confusion_Matrix_Weighted.png")
 print("4. ROC_Curve_Weighted.png")
 print("5. Precision_Recall_Curve.png (NEW)")
 print("6. early_labor_model_weighted.keras")
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import joblib
+import tensorflow as tf
+from sklearn.metrics import accuracy_score
+
+# 1. LOAD YOUR SAVED MODEL & DATA
+# (Make sure these files are in the same folder)
+print("Loading model and data...")
+model = tf.keras.models.load_model('early_labor_model_weighted.keras') # Your best model
+scaler = joblib.load('scaler_weighted.pkl')
+
+# Load the test data again (to measure importance on)
+term_df = pd.read_excel("term birth clean data set.xlsx")
+preterm_df = pd.read_excel("Pre term birth clean data set.xlsx")
+
+preterm_df['label'] = 1
+term_df['label'] = 0
+df_full = pd.concat([preterm_df, term_df], ignore_index=True)
+
+# Select the EXACT SAME features you trained on (No tocolysis!)
+features = [
+    'Age', 'Pregnancy_Number', 'Num_Prev_births', 'Prev_preterm_birth', 
+    'Prev_csections_count', 'Gastational_Age_exam_week_total', 
+    'cervical_length_cm', 'IVF', 'smoking', 'Pre_Diabetes', 
+    'Gestational_Diabetes', 'hypertension', 'Other_Conditions', 
+    'conization', 'fetal_sex'
+]
+
+X = df_full[features].copy()
+y = df_full['label'].copy()
+
+# Fast Cleaning (Same as training script)
+for col in ['IVF', 'smoking', 'Pre_Diabetes', 'Gestational_Diabetes', 'hypertension', 'Other_Conditions', 'conization', 'Prev_preterm_birth']:
+    X[col] = pd.to_numeric(X[col], errors='coerce').fillna(0)
+X['fetal_sex'] = X['fetal_sex'].replace({'m': 1, 'f': 0, 'M': 1, 'F': 0})
+X['fetal_sex'] = pd.to_numeric(X['fetal_sex'], errors='coerce').fillna(0)
+for col in ['Age', 'Pregnancy_Number', 'Num_Prev_births', 'Prev_csections_count', 'cervical_length_cm', 'Gastational_Age_exam_week_total']:
+    X[col] = pd.to_numeric(X[col], errors='coerce')
+    X[col] = X[col].fillna(X[col].median())
+
+# Scale the data using your SAVED scaler
+X_scaled = scaler.transform(X)
+
+# 2. DEFINE THE "PERMUTATION IMPORTANCE" FUNCTION
+def get_feature_importance(model, X, y, feature_names):
+    # Step A: Get the model's original accuracy
+    y_pred_orig = (model.predict(X, verbose=0) > 0.5).astype(int)
+    baseline_acc = accuracy_score(y, y_pred_orig)
+    print(f"Baseline Model Accuracy: {baseline_acc:.4f}")
+    
+    importances = []
+    
+    # Step B: Loop through every feature
+    for i in range(X.shape[1]):
+        # Create a copy of the data
+        X_permuted = X.copy()
+        
+        # Scramble (Shuffle) ONLY this column
+        np.random.shuffle(X_permuted[:, i])
+        
+        # Predict again with the scrambled data
+        y_pred_perm = (model.predict(X_permuted, verbose=0) > 0.5).astype(int)
+        perm_acc = accuracy_score(y, y_pred_perm)
+        
+        # The "Importance" is how much accuracy DROPPED
+        drop = baseline_acc - perm_acc
+        importances.append(drop)
+        print(f"Feature: {feature_names[i]:<30} | Drop in Acc: {drop:.4f}")
+        
+    return pd.DataFrame({'Feature': feature_names, 'Importance': importances})
+
+# 3. RUN IT
+print("\nCalculating importance (this might take 10 seconds)...")
+importance_df = get_feature_importance(model, X_scaled, y, features)
+
+# Sort results
+importance_df = importance_df.sort_values(by='Importance', ascending=True)
+
+# 4. PLOT AND SAVE
+plt.figure(figsize=(10, 8))
+plt.barh(importance_df['Feature'], importance_df['Importance'], color='teal')
+plt.xlabel("Importance (Drop in Accuracy)")
+plt.title("Which Features Does YOUR Model Use?")
+plt.tight_layout()
+plt.savefig('my_model_feature_importance.png', dpi=300)
+plt.show()
+
+print("\nSaved plot as 'my_model_feature_importance.png'")
+print(importance_df.sort_values(by='Importance', ascending=False))
