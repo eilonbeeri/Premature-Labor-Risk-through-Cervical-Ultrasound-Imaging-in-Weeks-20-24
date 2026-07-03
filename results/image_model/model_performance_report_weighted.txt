@@ -1,0 +1,17 @@
+=== TEST RESULTS ===
+ROC-AUC: 0.738
+PR-AUC : 0.548
+
+Confusion Matrix (rows=true, cols=pred):
+[[46 11]
+ [ 2  4]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0      0.958     0.807     0.876        57
+           1      0.267     0.667     0.381         6
+
+    accuracy                          0.794        63
+   macro avg      0.613     0.737     0.629        63
+weighted avg      0.892     0.794     0.829        63
