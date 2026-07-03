@@ -1,5 +1,4 @@
-# Premature-Labor-Risk-through-Cervical-Ultrasound-Imaging-in-Weeks-20-24
-Multimodal machine-learning framework for predicting preterm birth risk using transvaginal ultrasound (TVUS) images and maternal clinical data. Features a MATLAB pipeline for normalized ROI extraction and an early-fusion deep learning network (EfficientNetB0 + MLP) optimized to maximize clinical sensitivity.
+# Premature Labor Risk through Cervical Ultrasound Imaging in Weeks 20-24
 ## Overview
 Preterm birth (PTB), defined as delivery before 37 weeks of gestation, is a global challenge associated with substantial neonatal mortality and long-term morbidity. The standard clinical screening method relies on manual, operator-dependent measurements of cervical length via transvaginal ultrasound (TVUS). However, simple geometric metrics frequently fail to capture the subtle microscopic tissue-level remodeling that precedes spontaneous delivery.
 
