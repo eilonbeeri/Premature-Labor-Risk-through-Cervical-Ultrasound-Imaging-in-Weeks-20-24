@@ -60,10 +60,11 @@ pip install tensorflow keras pandas numpy opencv-python scikit-learn matplotlib 
 ```
 ## How to Train & Evaluate
 
-To replicate the system findings and execute the modules, follow this sequence:
+To replicate the system findings and execute the modules:
+First, update the input and output directories in all scripts. Then, follow this sequence:
 
 ### Step 1: ROI Extraction & Preprocessing
-1. Open `preprocessing/roi_processor.m` in MATLAB, set input and output directories, and run the script.
+1. Open MATLAB and run the script located at `preprocessing/roi_processor.m`.
 2. Select your raw ultrasound image directory via the graphical popup interface.
 3. Use the toolbar zoom to locate the machine’s distance indicator calibration banner, press any key on your keyboard to activate the pointer, and click 2 separate points. Input the true distance in centimeters (cm) when prompted in the MATLAB command window.
 4. Locate the cervical tissue using the zoom function, press any key, and click 4 bounding points around the cervical anatomy.
