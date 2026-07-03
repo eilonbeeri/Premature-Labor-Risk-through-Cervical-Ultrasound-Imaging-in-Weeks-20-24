@@ -1,0 +1,19 @@
+--- MULTIMODAL DEEP LEARNING MODEL REPORT ---
+Class Weights Used: {0: np.float64(0.5833333333333334), 1: np.float64(3.5)}
+
+AUC SCORE: 0.9000
+AVG PRECISION (AP): 0.8156
+
+CONFUSION MATRIX:
+[[23  5]
+ [ 1  4]]
+
+CLASSIFICATION REPORT:
+              precision    recall  f1-score   support
+
+        Term       0.96      0.82      0.88        28
+     Preterm       0.44      0.80      0.57         5
+
+    accuracy                           0.82        33
+   macro avg       0.70      0.81      0.73        33
+weighted avg       0.88      0.82      0.84        33
