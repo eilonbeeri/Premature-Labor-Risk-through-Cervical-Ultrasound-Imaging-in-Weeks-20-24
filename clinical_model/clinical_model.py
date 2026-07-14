@@ -11,7 +11,7 @@ from tensorflow.keras.metrics import Recall
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix, classification_report, roc_curve, roc_auc_score
-from sklearn.metrics import precision_recall_curve, average_precision_score # <--- NEW IMPORTS
+from sklearn.metrics import precision_recall_curve, average_precision_score
 from sklearn.utils import class_weight
 
 # ---------------------------------------------------------
