@@ -147,7 +147,7 @@ with open("model_performance_report_weighted.txt", "w", encoding="utf-8") as f:
     f.write("--- DEEP LEARNING MODEL REPORT (WEIGHTED) ---\n")
     f.write(f"Class Weights Used: {weights_dict}\n\n")
     f.write(f"AUC SCORE: {auc_score:.4f}\n")
-    f.write(f"AVG PRECISION (AP): {ap_score:.4f}\n\n") # <--- Added to File
+    f.write(f"AVG PRECISION (AP): {ap_score:.4f}\n\n")
     f.write("CONFUSION MATRIX:\n")
     f.write(f"{cm}\n\n")
     f.write("(Top-Left: True Negatives, Top-Right: False Positives)\n")
@@ -195,7 +195,7 @@ plt.legend(loc="lower right")
 plt.grid(True)
 plt.savefig('ROC_Curve_Weighted.png')
 
-# --- NEW: 4. Precision-Recall Curve Plot ---
+# 4. Precision-Recall Curve Plot ---
 precision, recall, _ = precision_recall_curve(y_test, y_pred_prob)
 plt.figure(figsize=(8, 6))
 plt.plot(recall, precision, color='purple', lw=2, label=f'PR Curve (AP = {ap_score:.2f})')
@@ -211,11 +211,11 @@ model.save('early_labor_model_weighted.keras')
 joblib.dump(scaler, 'scaler_weighted.pkl')
 
 print("\nSuccess! Files saved:")
-print("1. model_performance_report_weighted.txt (Now includes AUC & AP)")
+print("1. model_performance_report_weighted.txt")
 print("2. Accuracy_Loss_Plot_Weighted.png")
 print("3. Confusion_Matrix_Weighted.png")
 print("4. ROC_Curve_Weighted.png")
-print("5. Precision_Recall_Curve.png (NEW)")
+print("5. Precision_Recall_Curve.png")
 print("6. early_labor_model_weighted.keras")
 
 import pandas as pd
@@ -226,9 +226,8 @@ import tensorflow as tf
 from sklearn.metrics import accuracy_score
 
 # 1. LOAD YOUR SAVED MODEL & DATA
-# (Make sure these files are in the same folder)
 print("Loading model and data...")
-model = tf.keras.models.load_model('early_labor_model_weighted.keras') # Your best model
+model = tf.keras.models.load_model('early_labor_model_weighted.keras')
 scaler = joblib.load('scaler_weighted.pkl')
 
 # Load the test data again (to measure importance on)
@@ -239,7 +238,7 @@ preterm_df['label'] = 1
 term_df['label'] = 0
 df_full = pd.concat([preterm_df, term_df], ignore_index=True)
 
-# Select the EXACT SAME features you trained on (No tocolysis!)
+# Select the EXACT SAME features we trained on
 features = [
     'Age', 'Pregnancy_Number', 'Num_Prev_births', 'Prev_preterm_birth', 
     'Prev_csections_count', 'Gastational_Age_exam_week_total', 
@@ -292,7 +291,7 @@ def get_feature_importance(model, X, y, feature_names):
     return pd.DataFrame({'Feature': feature_names, 'Importance': importances})
 
 # 3. RUN IT
-print("\nCalculating importance (this might take 10 seconds)...")
+print("\nCalculating importance")
 importance_df = get_feature_importance(model, X_scaled, y, features)
 
 # Sort results
