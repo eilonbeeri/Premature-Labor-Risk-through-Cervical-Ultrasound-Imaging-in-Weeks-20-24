@@ -130,7 +130,7 @@ y_pred = (y_pred_prob > 0.5).astype(int)
 
 # --- Calculate Metrics ---
 auc_score = roc_auc_score(y_test, y_pred_prob)
-ap_score = average_precision_score(y_test, y_pred_prob) # <--- NEW: Average Precision
+ap_score = average_precision_score(y_test, y_pred_prob) # Average Precision
 
 # Create report strings
 report_str = classification_report(y_test, y_pred, target_names=['Term (Healthy)', 'Preterm (Early)'])
