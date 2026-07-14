@@ -29,14 +29,14 @@ paths  = np.array(pre_paths + term_paths)
 labels = np.array([1]*len(pre_paths) + [0]*len(term_paths))
 
 # ====== split: train/val/test ======
-# 1) split out test (15%)
+# 1) split out test (21%)
 X_temp, X_test, y_temp, y_test = train_test_split(
     paths, labels, test_size=0.21, random_state=SEED, stratify=labels
 )
 
-# 2) split remaining into train (70%) and val (15%)
-#    remaining is 85% -> val should be 15/85 of that remainder
-val_frac_of_temp = 0.25 / 0.80
+# 2) split remaining to val and train
+#    remaining is 80% 
+val_frac_of_temp = 0.20 / 0.80
 
 X_train, X_val, y_train, y_val = train_test_split(
     X_temp, y_temp, test_size=val_frac_of_temp, random_state=SEED, stratify=y_temp
