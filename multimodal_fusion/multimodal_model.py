@@ -314,7 +314,7 @@ THRESH = 0.40
 y_pred = (y_prob >= THRESH).astype(int)
 
 # -------------------------------------------------------------
-# THE FIX: FOOLPROOF LAYER EXTRACTION BY MATRIX SHAPE
+# FOOLPROOF LAYER EXTRACTION BY MATRIX SHAPE
 # -------------------------------------------------------------
 denses = [l for l in model.layers if isinstance(l, tf.keras.layers.Dense)]
 
