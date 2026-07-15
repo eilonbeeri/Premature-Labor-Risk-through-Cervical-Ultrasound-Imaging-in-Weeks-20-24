@@ -245,7 +245,7 @@ GRADCAM_INPUT_DIR = "ROI PreTerm birth Ultrasound"
 SAVE_DIR = "plots_ROI/gradcam_all_images"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
-THRESH = 0.44   # use your chosen threshold
+THRESH = best_threshold
 
 exts = ("*.png", "*.jpg", "*.jpeg", "*.bmp", "*.PNG", "*.JPG", "*.JPEG", "*.BMP")
 
