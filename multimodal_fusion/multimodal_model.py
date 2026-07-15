@@ -310,7 +310,7 @@ def save_and_show(fig, filename):
 # ---------- Get Predictions ----------
 y_true = y_test.astype(int)
 y_prob = model.predict({"image_input": X_test_img, "clinical_input": X_test_clin}, verbose=0).ravel()
-THRESH = 0.40
+THRESH = 0.50
 y_pred = (y_prob >= THRESH).astype(int)
 
 # -------------------------------------------------------------
