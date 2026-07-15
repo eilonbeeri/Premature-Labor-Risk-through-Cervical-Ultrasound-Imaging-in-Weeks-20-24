@@ -90,9 +90,9 @@ base = tf.keras.applications.EfficientNetB0(
 
 base.trainable = False
 
-inputs = tf.keras.Input(shape=(IMG_SIZE[0], IMG_SIZE[1], 3))
+inputs = tf.keras.Input(shape=(IMG_SIZE[0], IMG_SIZE[1], 3)) #224,224,3
 x = tf.keras.applications.efficientnet.preprocess_input(inputs * 255.0)
-x = base(x, training=False)
+x = base(x, training=False) #7x7x1280
 x = tf.keras.layers.GlobalAveragePooling2D()(x)
 x = tf.keras.layers.Dropout(0.2)(x)
 
